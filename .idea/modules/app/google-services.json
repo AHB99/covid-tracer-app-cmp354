@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "978158188599",
+    "firebase_url": "https://cmp354-covidtracer.firebaseio.com",
+    "project_id": "cmp354-covidtracer",
+    "storage_bucket": "cmp354-covidtracer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978158188599:android:43b803db5a27201e26e7b2",
+        "android_client_info": {
+          "package_name": "com.example.cmp354_covidtracer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978158188599-8slk5i9u14q1vpf81qeiuem61gofs7et.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cmp354_covidtracer",
+            "certificate_hash": "ebdb2684e9fd913ed5644862924078423d285c53"
+          }
+        },
+        {
+          "client_id": "978158188599-sd4jrpkuebg7c6o1l0pik9t18a9cq28l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmjGkHPTzXAWWe2khwvLkovh73PjkNzQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978158188599-sd4jrpkuebg7c6o1l0pik9t18a9cq28l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
