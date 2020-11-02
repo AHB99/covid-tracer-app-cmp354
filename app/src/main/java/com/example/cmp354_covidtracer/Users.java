@@ -1,5 +1,7 @@
 package com.example.cmp354_covidtracer;
 
+import java.util.Objects;
+
 public class Users {
     private String name;
     private String emailId;
@@ -8,6 +10,20 @@ public class Users {
     public Users() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Users users = (Users) o;
+        return isCovidPositive == users.isCovidPositive &&
+                Objects.equals(name, users.name) &&
+                Objects.equals(emailId, users.emailId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, emailId, isCovidPositive);
+    }
 
     public String getName() {
         return name;

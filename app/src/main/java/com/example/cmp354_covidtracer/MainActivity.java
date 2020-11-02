@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
 
 //        //If account already set
-//        if (!sharedPreferences.getString("userEmailId", "").equals("")){
-//            Intent intent = new Intent(this, HomeActivity.class);
-//            startActivity(intent);
-//        }
+        if (!sharedPreferences.getString("userEmailId", "").equals("")){
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+        }
 
 //
 //        DatabaseReference myRef = database.getReference("Users");

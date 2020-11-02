@@ -30,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:onClick="onPcrToggled"
             android:text="ToggleButton"
             android:textOff="Negative PCR"
             android:textOn="Positive PCR" />
