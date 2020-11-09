@@ -52,7 +52,10 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    
+    //Will be moved to service later
+    private void checkAllExposures(){
+
+    }
 
 
 

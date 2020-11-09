@@ -1,5 +1,6 @@
 package com.example.cmp354_covidtracer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -31,34 +32,53 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
 
 //        //If account already set
-        if (!sharedPreferences.getString("userEmailId", "").equals("")){
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
-        }
+//        if (!sharedPreferences.getString("userEmailId", "").equals("")){
+//            Intent intent = new Intent(this, HomeActivity.class);
+//            startActivity(intent);
+//        }
 
     }
 
     public void onSubmitClicked(View view){
 
-        //TODO: Check for uniqueness
-        //TODO: Check if empty
+        final String userName = etName.getText().toString().toLowerCase();
+        final String userEmailId = etEmailId.getText().toString().toLowerCase();
 
-        String userName = etName.getText().toString();
-        String userEmailId = etEmailId.getText().toString();
+        if (userName.isEmpty() || userEmailId.isEmpty()){
+            Toast.makeText(this, "Please fill fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        Users newUser = new Users(userName,userEmailId, false);
-        DatabaseReference myRef = database.getReference("Users");
-        DatabaseReference newUserReference =myRef.push();
-        String userDbKey = newUserReference.getKey();
-        newUserReference.setValue(newUser);
+        final DatabaseReference myRef = database.getReference("Users");
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("userName", userName);
-        editor.putString("userEmailId", userEmailId);
-        editor.putString("userDbKey", userDbKey);
-        editor.commit();
+        myRef.orderByChild("emailId").equalTo(userEmailId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String userKey = "";
+                if (dataSnapshot.hasChildren()) {
+                    //This will loop ONCE over the SINGLE child with the email id
+                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                        userKey = ds.getKey();
+                    }
+                }
+                else{
+                    Users newUser = new Users(userName,userEmailId, false);
+                    DatabaseReference newUserReference = myRef.push();
+                    userKey = newUserReference.getKey();
+                    newUserReference.setValue(newUser);
+                }
 
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("userName", userName);
+                editor.putString("userEmailId", userEmailId);
+                editor.putString("userDbKey", userKey);
+                editor.commit();
+
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
     }
 }
