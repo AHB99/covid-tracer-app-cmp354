@@ -2,25 +2,27 @@ package com.example.cmp354_covidtracer;
 
 public class Exposure {
 
-    private String covidId;
+
+    private String positiveId;
     private String userId;
     private Location location;
 
     public Exposure() {
     }
 
-    public Exposure(String covidId, String userId, Location location) {
-        this.covidId = covidId;
+
+    public Exposure(String positiveId, String userId, Location location) {
+        this.positiveId = positiveId;
         this.userId = userId;
         this.location = location;
     }
 
-    public String getCovidId() {
-        return covidId;
+    public String getPositiveId() {
+        return positiveId;
     }
 
-    public void setCovidId(String covidId) {
-        this.covidId = covidId;
+    public void setPositiveId(String positiveId) {
+        this.positiveId = positiveId;
     }
 
     public String getUserId() {
@@ -37,5 +39,13 @@ public class Exposure {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+    @Override
+    public String toString() {
+        return "Exposure{" +
+                "positiveId='" + positiveId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", location=" + location +
+                '}';
     }
 }

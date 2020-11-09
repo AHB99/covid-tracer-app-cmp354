@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //TODO: Add loading spinner while DB is checked
     public void onSubmitClicked(View view){
 
         final String userName = etName.getText().toString().toLowerCase();
@@ -55,10 +56,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String userKey = "";
+                Boolean userPositive = false;
                 if (dataSnapshot.hasChildren()) {
                     //This will loop ONCE over the SINGLE child with the email id
                     for (DataSnapshot ds : dataSnapshot.getChildren()){
                         userKey = ds.getKey();
+                        userPositive = ds.child("covidPositive").getValue(Boolean.class);
                     }
                 }
                 else{
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("userName", userName);
                 editor.putString("userEmailId", userEmailId);
+                editor.putBoolean("userPositive", userPositive);
                 editor.putString("userDbKey", userKey);
                 editor.commit();
 

@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity {
 
     TextView tvWelcome;
@@ -34,6 +36,9 @@ public class HomeActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
 
         tvWelcome.setText("Welcome " + sharedPreferences.getString("userName", ""));
+        tglBtnPcr.setChecked(sharedPreferences.getBoolean("userPositive",false));
+        //DEBUG
+        checkAllExposures();
     }
 
     public void onPcrToggled(View view){
@@ -52,8 +57,59 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    //Will be moved to service later
+    //Will be moved to SERVICE later, periodically checking every x mins, saving exposures local DB
     private void checkAllExposures(){
+        //Get all positives
+        final String currentUserDbKey = sharedPreferences.getString("userDbKey", "");
+
+        final DatabaseReference dPositivesRef = database.getReference("Positives");
+        dPositivesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final ArrayList<String> allPositives = new ArrayList<>();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    allPositives.add(ds.getKey());
+                }
+                final DatabaseReference dLocationsRef = database.getReference("Locations");
+
+                dLocationsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        ArrayList<Exposure> allExposures = new ArrayList<>();
+
+                        //Iterate over every POSITIVE user...
+                        for (DataSnapshot userHistory : dataSnapshot.getChildren()){
+                            //If POSITIVE user AND not current user, iterate over all THEIR locations
+                            if (allPositives.contains(userHistory.getKey()) && !userHistory.getKey().equals(currentUserDbKey)){
+                                for (DataSnapshot positiveUsersLocation : userHistory.getChildren()){
+                                    //Compare this with all CURRENT user's locations
+                                    for (DataSnapshot currentUsersLocation : dataSnapshot.child(currentUserDbKey).getChildren()){
+                                        Location posLoc = positiveUsersLocation.getValue(Location.class);
+                                        Location currLoc = currentUsersLocation.getValue(Location.class);
+                                        if (Location.isExposure(posLoc,currLoc)){
+                                            allExposures.add(new Exposure(userHistory.getKey(),currentUserDbKey,currLoc));
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                        for (Exposure ex : allExposures){
+                            Log.v("abc", ex.toString());
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+
 
     }
 

@@ -3,12 +3,13 @@ package com.example.cmp354_covidtracer;
 public class Location {
     private int lng;
     private int lat;
-    private int timestamp;
+    //Timestamp
+    private int ts;
 
-    public Location(int lng, int lat, int timestamp) {
+    public Location(int lng, int lat, int ts) {
         this.lng = lng;
         this.lat = lat;
-        this.timestamp = timestamp;
+        this.ts = ts;
     }
 
     public Location() {
@@ -30,11 +31,27 @@ public class Location {
         this.lat = lat;
     }
 
-    public int getTimestamp() {
-        return timestamp;
+    public int getTs() {
+        return ts;
     }
 
-    public void setTimestamp(int timestamp) {
-        this.timestamp = timestamp;
+    public void setTs(int ts) {
+        this.ts = ts;
+    }
+
+    public static boolean isExposure(Location posLoc, Location currLoc){
+        return ((Math.abs(posLoc.getLat() - currLoc.getLat()) < 2)
+                && (Math.abs(posLoc.getLng() - currLoc.getLng()) < 2)
+                && (Math.abs(posLoc.getTs() - currLoc.getTs()) < 50));
+
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "lng=" + lng +
+                ", lat=" + lat +
+                ", ts=" + ts +
+                '}';
     }
 }
