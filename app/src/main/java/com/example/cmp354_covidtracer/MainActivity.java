@@ -36,26 +36,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-//
-//        DatabaseReference myRef = database.getReference("Users");
-//
-//        myRef.child("User1").setValue(new Users("Johnathan"));
-//
-//        // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                Users value = dataSnapshot.child("User1").getValue(Users.class);
-//                Toast.makeText(MainActivity.this, value.getName(), Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//            }
-//        });
-
     }
 
     public void onSubmitClicked(View view){
@@ -66,15 +46,17 @@ public class MainActivity extends AppCompatActivity {
         String userName = etName.getText().toString();
         String userEmailId = etEmailId.getText().toString();
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("userName", userName);
-        editor.putString("userEmailId", userEmailId);
-        editor.commit();
-
         Users newUser = new Users(userName,userEmailId, false);
         DatabaseReference myRef = database.getReference("Users");
         DatabaseReference newUserReference =myRef.push();
+        String userDbKey = newUserReference.getKey();
         newUserReference.setValue(newUser);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userName", userName);
+        editor.putString("userEmailId", userEmailId);
+        editor.putString("userDbKey", userDbKey);
+        editor.commit();
 
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);

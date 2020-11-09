@@ -34,35 +34,26 @@ public class HomeActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
 
         tvWelcome.setText("Welcome " + sharedPreferences.getString("userName", ""));
-
-
-
-
     }
 
     public void onPcrToggled(View view){
-        final DatabaseReference dRef = database.getReference("Users");
-        //Need to define field to search for by "orderBychild"
-        //Then "equalTo()" to search by value
-        //Then add a listener for when it finishes retrieving it on another thread
-        dRef.orderByChild("emailId").equalTo(sharedPreferences.getString("userEmailId", "")).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //This will return all children with the email id (only 1 hopefully) so this for-loop iterates ONCE
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
-                    //We now have the unique key of the user
-                    String userKey = ds.getKey();
-                    //We set the new PCR value based on toggle button
-                    dRef.child(userKey).child("covidPositive").setValue(tglBtnPcr.isChecked());
-                }
-            }
+        final DatabaseReference dUserRef = database.getReference("Users");
+        String userDbKey = sharedPreferences.getString("userDbKey", "");
+        dUserRef.child(userDbKey).child("covidPositive").setValue(tglBtnPcr.isChecked());
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        final DatabaseReference dPositivesRef = database.getReference("Positives");
 
-            }
-        });
+        if (tglBtnPcr.isChecked()){
+            dPositivesRef.child(userDbKey).setValue(sharedPreferences.getString("userEmailId", ""));
+        }
+        else {
+            dPositivesRef.child(userDbKey).removeValue();
+        }
+
     }
+
+    
+
 
 
 }
