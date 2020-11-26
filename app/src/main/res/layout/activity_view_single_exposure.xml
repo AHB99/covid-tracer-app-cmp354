@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:layout_weight="1">
+    <TableLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1" android:layout_margin="5dp">
+        <TableRow android:id="@+id/nameTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nameLabelTextView"
+                style="@style/ContactLabelTextView"
+                android:text="Date:"></TextView>
+            <TextView android:id="@+id/dateTextView"
+                style="@style/ContactTextView"></TextView>
+        </TableRow>
+
+        <TableRow android:id="@+id/phoneTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/phoneLabelTextView"
+                style="@style/ContactLabelTextView"
+                android:text="Latitude"></TextView>
+            <TextView android:id="@+id/latTextView"
+                style="@style/ContactTextView"></TextView>
+        </TableRow>
+
+        <TableRow android:id="@+id/emailTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/emailLabelTextView"
+                style="@style/ContactLabelTextView"
+                android:text="Longitude"></TextView>
+            <TextView android:id="@+id/lngTextView"
+                style="@style/ContactTextView"></TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/mapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View In Map" />
+        </TableRow>
+
+    </TableLayout>
+</ScrollView>

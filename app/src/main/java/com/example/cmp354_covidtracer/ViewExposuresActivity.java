@@ -111,13 +111,12 @@ public class ViewExposuresActivity  extends ListActivity
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                 long arg3)
         {
-//            // create an Intent to launch the ViewContact Activity
-//            Intent viewContact =
-//                    new Intent(AddressBook.this, ViewContact.class);
-//
-//            // pass the selected contact's row ID as an extra with the Intent
-//            viewContact.putExtra(ROW_ID, arg3);
-//            startActivity(viewContact); // start the ViewContact Activity
+            // create an Intent to launch the ViewContact Activity
+            Intent viewContact = new Intent(ViewExposuresActivity.this, ViewSingleExposureActivity.class);
+
+            // pass the selected contact's row ID as an extra with the Intent
+            viewContact.putExtra(ROW_ID, arg3);
+            startActivity(viewContact); // start the ViewContact Activity
         } // end method onItemClick
     }; // end viewContactListener
 }
