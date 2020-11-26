@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,6 +25,8 @@ public class ViewSingleExposureActivity extends AppCompatActivity {
     private TextView latTextView; // displays contact's phone
     private TextView lngTextView; // displays contact's email
     private Button mapButton; // displays contact's street
+    private double lat;
+    private double lng;
 
     // called when the activity is first created
     @Override
@@ -36,6 +39,7 @@ public class ViewSingleExposureActivity extends AppCompatActivity {
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         latTextView = (TextView) findViewById(R.id.latTextView);
         lngTextView = (TextView) findViewById(R.id.lngTextView);
+        mapButton = (Button) findViewById(R.id.mapButton);
 
         // get the selected contact's row ID
         Bundle extras = getIntent().getExtras();
@@ -49,7 +53,9 @@ public class ViewSingleExposureActivity extends AppCompatActivity {
         super.onResume();
 
         // create new LoadContactTask and execute it
+        mapButton.setEnabled(false);
         new LoadExposureTask().execute(rowID);
+
     } // end method onResume
 
     // performs database query outside GUI thread
@@ -88,10 +94,25 @@ public class ViewSingleExposureActivity extends AppCompatActivity {
             dateTextView.setText(dateString);
             latTextView.setText(String.valueOf(result.getDouble(latIndex)));
             lngTextView.setText(String.valueOf(result.getDouble(lngIndex)));
+            lat = result.getDouble(latIndex);
+            lng = result.getDouble(lngIndex);
+
+            mapButton.setEnabled(true);
+
 
             result.close(); // close the result cursor
             databaseConnector.close(); // close database connection
         } // end method onPostExecute
     } // end class LoadContactTask
+
+    public void onMapButtonClicked(View view){
+        Intent intent = new Intent(ViewSingleExposureActivity.this, ExposureMapActivity.class);
+
+        // pass the selected contact's row ID as an extra with the Intent
+        intent.putExtra("lat", lat);
+        intent.putExtra("lng", lng);
+
+        startActivity(intent);
+    }
 
 }
