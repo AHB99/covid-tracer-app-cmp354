@@ -18,7 +18,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ViewSingleExposureActivity extends AppCompatActivity {
+public class  ViewSingleExposureActivity extends AppCompatActivity {
 
     private long rowID; // selected contact's name
     private TextView dateTextView; // displays contact's name
