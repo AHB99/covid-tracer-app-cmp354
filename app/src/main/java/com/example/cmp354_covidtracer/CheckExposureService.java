@@ -8,23 +8,18 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,6 +34,11 @@ public class CheckExposureService extends Service {
     public IBinder onBind(Intent intent) { return null; }
 
     @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
@@ -47,8 +47,8 @@ public class CheckExposureService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         stopTimer();
+        super.onDestroy();
     }
 
     private void startTimer() {
@@ -70,7 +70,7 @@ public class CheckExposureService extends Service {
 
     //Will be moved to SERVICE later, periodically checking every x mins, saving exposures local DB
     //TODO: Set limit to 2 weeks/Delete older than 2 weeks
-    private void checkAllExposures(){
+    private void checkAllExposures() {
         //Get all positives
         final String currentUserDbKey = sharedPreferences.getString("userDbKey", "");
 
@@ -96,9 +96,9 @@ public class CheckExposureService extends Service {
                                 for (DataSnapshot positiveUsersLocation : userHistory.getChildren()){
                                     //Compare this with all CURRENT user's locations
                                     for (DataSnapshot currentUsersLocation : dataSnapshot.child(currentUserDbKey).getChildren()){
-                                        Location posLoc = positiveUsersLocation.getValue(Location.class);
-                                        Location currLoc = currentUsersLocation.getValue(Location.class);
-                                        if (Location.isExposure(posLoc,currLoc)){
+                                        UserLocation posLoc = positiveUsersLocation.getValue(UserLocation.class);
+                                        UserLocation currLoc = currentUsersLocation.getValue(UserLocation.class);
+                                        if (UserLocation.isExposure(posLoc,currLoc)){
                                             allExposures.add(new Exposure(userHistory.getKey(),currentUserDbKey,currLoc));
                                         }
 
@@ -142,7 +142,7 @@ public class CheckExposureService extends Service {
             databaseConnector.open();
             String userIdToSelect = exp.getUserId();
             String positiveIdToSelect  = exp.getPositiveId();
-            int timestampToSelect = exp.getLocation().getTs();
+            long timestampToSelect = exp.getLocation().getTs();
 
             // get a cursor containing all data on given entry
             return databaseConnector.getExposureByUsersAndTimestamp(userIdToSelect,positiveIdToSelect,timestampToSelect);

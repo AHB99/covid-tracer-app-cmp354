@@ -2,11 +2,18 @@ package com.example.cmp354_covidtracer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     EditText etName, etEmailId;
+    Button submitBtn;
     SharedPreferences sharedPreferences;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -29,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         etName = (EditText) findViewById(R.id.etName);
         etEmailId = (EditText) findViewById(R.id.etEmailId);
+        submitBtn = (Button) findViewById(R.id.btnSubmit);
         sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
 
 //        //If account already set
@@ -37,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
 //            startActivity(intent);
 //        }
 
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 123)
+            if(grantResults.length == 1&& grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                startService(new Intent(this, GPSService.class));
     }
 
     //TODO: Add loading spinner while DB is checked
@@ -49,6 +64,29 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Please fill fields", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
+
+
+
+        // ---------------------SOME ISSUE WITH THIS CODE AS WELL, NEED TO ASK USER TO TURN ON GPS BEFORE STARTING HOMEACTIVITY, BUT IT STARTS HOMEACTIVITY ANYWAY----------------------------------------------
+        // if GPS is not enabled, start GPS settings activity
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Toast.makeText(this, "Please activate GPS settings", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        }
+        //CMP354 2019 update: get user permission to use GPS
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.ACCESS_FINE_LOCATION },123);
+        else
+            startService(new Intent(this, GPSService.class));
+
+
+
+
+
+
 
         final DatabaseReference myRef = database.getReference("Users");
 

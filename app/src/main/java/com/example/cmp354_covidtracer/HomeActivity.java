@@ -1,26 +1,17 @@
 package com.example.cmp354_covidtracer;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.os.AsyncTask;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -43,9 +34,14 @@ public class HomeActivity extends AppCompatActivity {
 
         tvWelcome.setText("Welcome " + sharedPreferences.getString("userName", ""));
         tglBtnPcr.setChecked(sharedPreferences.getBoolean("userPositive",false));
-        //DEBUG
-//        checkAllExposures();
+
         startService(new Intent(this, CheckExposureService.class));
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 123)
+            if(grantResults.length == 1&& grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                startService(new Intent(this, GPSService.class));
     }
 
     public void onPcrToggled(View view){

@@ -1,18 +1,18 @@
 package com.example.cmp354_covidtracer;
 
-public class Location {
+public class UserLocation {
     private double lng;
     private double lat;
     //Timestamp
-    private int ts;
+    private long ts;
 
-    public Location(double lng, double lat, int ts) {
+    public UserLocation(double lng, double lat, long ts) {
         this.lng = lng;
         this.lat = lat;
         this.ts = ts;
     }
 
-    public Location() {
+    public UserLocation() {
     }
 
     public double getLng() {
@@ -31,15 +31,15 @@ public class Location {
         this.lat = lat;
     }
 
-    public int getTs() {
+    public long getTs() {
         return ts;
     }
 
-    public void setTs(int ts) {
+    public void setTs(long ts) {
         this.ts = ts;
     }
 
-    public static boolean isExposure(Location posLoc, Location currLoc){
+    public static boolean isExposure(UserLocation posLoc, UserLocation currLoc){
         return ((Math.abs(posLoc.getLat() - currLoc.getLat()) < 2)
                 && (Math.abs(posLoc.getLng() - currLoc.getLng()) < 2)
                 && (Math.abs(posLoc.getTs() - currLoc.getTs()) < 50));

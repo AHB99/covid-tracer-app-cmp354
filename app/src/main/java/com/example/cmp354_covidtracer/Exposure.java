@@ -5,13 +5,13 @@ public class Exposure {
 
     private String positiveId;
     private String userId;
-    private Location location;
+    private UserLocation location;
 
     public Exposure() {
     }
 
 
-    public Exposure(String positiveId, String userId, Location location) {
+    public Exposure(String positiveId, String userId, UserLocation location) {
         this.positiveId = positiveId;
         this.userId = userId;
         this.location = location;
@@ -33,11 +33,11 @@ public class Exposure {
         this.userId = userId;
     }
 
-    public Location getLocation() {
+    public UserLocation getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(UserLocation location) {
         this.location = location;
     }
     @Override

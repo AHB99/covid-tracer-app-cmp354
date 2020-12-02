@@ -78,7 +78,7 @@ public class DatabaseConnector
 
    } // end method getAllContacts
 
-   public Cursor getExposureByUsersAndTimestamp(String userIdToSelect, String positiveIdToSelect, int timestampToSelect)
+   public Cursor getExposureByUsersAndTimestamp(String userIdToSelect, String positiveIdToSelect, long timestampToSelect)
    {
       //return database.query("contacts", new String[] {"_id", "name"},
       //	         null, null, null, null, "name"/*order by*/);
