@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == 123)
             if(grantResults.length == 1&& grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                startService(new Intent(this, GPSService.class));
+                startActivity(new Intent(this, HomeActivity.class));
+        else
+            Toast.makeText(this, "Please enable GPS to use this app", Toast.LENGTH_LONG).show();
     }
 
     //TODO: Add loading spinner while DB is checked
@@ -65,28 +67,18 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-
-
-
-        // ---------------------SOME ISSUE WITH THIS CODE AS WELL, NEED TO ASK USER TO TURN ON GPS BEFORE STARTING HOMEACTIVITY, BUT IT STARTS HOMEACTIVITY ANYWAY----------------------------------------------
         // if GPS is not enabled, start GPS settings activity
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Toast.makeText(this, "Please activate GPS settings", Toast.LENGTH_LONG).show();
             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
+
         //CMP354 2019 update: get user permission to use GPS
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.ACCESS_FINE_LOCATION },123);
         else
-            startService(new Intent(this, GPSService.class));
-
-
-
-
-
-
+            startActivity(new Intent(this, HomeActivity.class));
 
         final DatabaseReference myRef = database.getReference("Users");
 
@@ -116,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("userDbKey", userKey);
                 editor.commit();
 
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+//                startActivity(intent);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}

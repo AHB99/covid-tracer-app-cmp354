@@ -1,9 +1,10 @@
 package com.example.cmp354_covidtracer;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     Button btnViewExposures;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         tglBtnPcr.setChecked(sharedPreferences.getBoolean("userPositive",false));
 
         startService(new Intent(this, CheckExposureService.class));
-    }
-
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 123)
-            if(grantResults.length == 1&& grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                startService(new Intent(this, GPSService.class));
+        startService(new Intent(this, GPSService.class));
     }
 
     public void onPcrToggled(View view){
