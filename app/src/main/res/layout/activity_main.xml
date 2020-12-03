@@ -16,10 +16,11 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:foregroundGravity="center"
             android:gravity="center"
             android:text="Set Account Info"
-            android:textSize="30sp" />
+            android:textSize="36sp" />
     </TableRow>
 
     <TableRow

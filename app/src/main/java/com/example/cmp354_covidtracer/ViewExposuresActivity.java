@@ -39,8 +39,8 @@ public class ViewExposuresActivity  extends ListActivity
         //String[] from = new String[] { "name"};
         //int[] to = new int[] { R.id.contactTextView, R.id.emailTextView };//from contact_list_item.xml
 
-        String[] from = new String[] { "lat", "lng", "timestamp" };
-        int[] to = new int[] { R.id.tvLat, R.id.tvLng, R.id.tvTimestamp};//from contact_list_item.xml
+        String[] from = new String[] { "timestamp" };
+        int[] to = new int[] { R.id.tvTimestamp};//from contact_list_item.xml
 
         exposureAdapter = new SimpleCursorAdapter(
                 ViewExposuresActivity.this, R.layout.contact_list_item, null, from, to, 0); //ts: code update to include flag
