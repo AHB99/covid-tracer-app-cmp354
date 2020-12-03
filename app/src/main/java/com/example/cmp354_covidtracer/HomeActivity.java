@@ -1,7 +1,6 @@
 package com.example.cmp354_covidtracer;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;

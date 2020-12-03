@@ -1,15 +1,9 @@
 package com.example.cmp354_covidtracer;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -17,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -50,22 +43,6 @@ public class GPSService extends Service implements GoogleApiClient.ConnectionCal
                 .setInterval(5000)
                 .setFastestInterval(2000);
         googleApiClient.connect();
-
-        // Foreground service code
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "Channel_ID")
-                .setOngoing(false)
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_light)
-                .setPriority(Notification.PRIORITY_LOW);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationChannel notificationChannel = new NotificationChannel("Channel_ID",
-                    "Channel_ID", NotificationManager.IMPORTANCE_LOW);
-            notificationChannel.setDescription("Channel_ID");
-            notificationChannel.setSound(null, null);
-            notificationManager.createNotificationChannel(notificationChannel);
-            startForeground(1, builder.build());
-        }
     }
 
     @Override
@@ -77,6 +54,7 @@ public class GPSService extends Service implements GoogleApiClient.ConnectionCal
     public void onDestroy() {
         if (googleApiClient.isConnected())
             googleApiClient.disconnect();
+        stopForeground(true);
         super.onDestroy();
     }
 
