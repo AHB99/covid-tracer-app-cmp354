@@ -67,19 +67,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // if GPS is not enabled, start GPS settings activity
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Toast.makeText(this, "Please activate GPS settings", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-        }
-
-        //CMP354 2019 update: get user permission to use GPS
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.ACCESS_FINE_LOCATION },123);
-        else
-            startActivity(new Intent(this, HomeActivity.class));
-
         final DatabaseReference myRef = database.getReference("Users");
 
         myRef.orderByChild("emailId").equalTo(userEmailId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -108,11 +95,27 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("userDbKey", userKey);
                 editor.commit();
 
+                userPermissions();
 //                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
 //                startActivity(intent);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
+    }
+
+    private void userPermissions() {
+        // if GPS is not enabled, start GPS settings activity
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Toast.makeText(this, "Please activate GPS settings", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        }
+
+        //CMP354 2019 update: get user permission to use GPS
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.ACCESS_FINE_LOCATION },123);
+        else
+            startActivity(new Intent(this, HomeActivity.class));
     }
 }
