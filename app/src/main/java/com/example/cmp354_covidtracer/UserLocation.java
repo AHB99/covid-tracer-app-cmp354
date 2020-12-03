@@ -42,7 +42,7 @@ public class UserLocation {
     public static boolean isExposure(UserLocation posLoc, UserLocation currLoc){
         return ((Math.abs(posLoc.getLat() - currLoc.getLat()) < 2)
                 && (Math.abs(posLoc.getLng() - currLoc.getLng()) < 2)
-                && (Math.abs(posLoc.getTs() - currLoc.getTs()) < 50));
+                && (Math.abs(posLoc.getTs() - currLoc.getTs()) < 1000*60*60*24));
 
     }
 

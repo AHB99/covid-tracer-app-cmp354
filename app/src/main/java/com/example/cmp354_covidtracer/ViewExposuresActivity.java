@@ -1,6 +1,7 @@
 package com.example.cmp354_covidtracer;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,7 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.ResourceCursorAdapter;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ViewExposuresActivity  extends ListActivity
 {
@@ -39,15 +45,32 @@ public class ViewExposuresActivity  extends ListActivity
         //String[] from = new String[] { "name"};
         //int[] to = new int[] { R.id.contactTextView, R.id.emailTextView };//from contact_list_item.xml
 
-        String[] from = new String[] { "lat", "lng", "timestamp" };
-        int[] to = new int[] { R.id.tvLat, R.id.tvLng, R.id.tvTimestamp};//from contact_list_item.xml
+        String[] from = new String[] { "timestamp" };
+        int[] to = new int[] { R.id.tvTimestamp};//from contact_list_item.xml
 
-        exposureAdapter = new SimpleCursorAdapter(
-                ViewExposuresActivity.this, R.layout.contact_list_item, null, from, to, 0); //ts: code update to include flag
+        exposureAdapter = new ClientCursorAdapter(
+                ViewExposuresActivity.this, R.layout.contact_list_item, null, 0); //ts: code update to include flag
 
         //TS: 3. link the cursor to the list view
         setListAdapter(exposureAdapter); // set contactView's adapter
     } // end method onCreate
+
+    public class ClientCursorAdapter extends ResourceCursorAdapter {
+
+        public ClientCursorAdapter(Context context, int layout, Cursor cursor, int flags) {
+            super(context, layout, cursor, flags);
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            TextView tvTimestamp = (TextView) view.findViewById(R.id.tvTimestamp);
+            long numericTs = cursor.getInt(cursor.getColumnIndex("timestamp"));
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM yy HH:mm:ss z yyyy");
+            String dateString = formatter.format(new Date(numericTs));
+            tvTimestamp.setText(dateString);
+        }
+    }
+
 
     @Override
     protected void onResume()

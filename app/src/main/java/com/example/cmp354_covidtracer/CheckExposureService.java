@@ -58,7 +58,7 @@ public class CheckExposureService extends Service {
             public void run() {
                 checkAllExposures();
             }
-        }, 1000, 1000);
+        }, 1000, 1000*5);
     }
 
     private void stopTimer() {
