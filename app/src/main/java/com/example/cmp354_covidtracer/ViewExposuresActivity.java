@@ -64,7 +64,7 @@ public class ViewExposuresActivity  extends ListActivity
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             TextView tvTimestamp = (TextView) view.findViewById(R.id.tvTimestamp);
-            long numericTs = cursor.getInt(cursor.getColumnIndex("timestamp"));
+            long numericTs = cursor.getLong(cursor.getColumnIndex("timestamp"));
             SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM yy HH:mm:ss z yyyy");
             String dateString = formatter.format(new Date(numericTs));
             tvTimestamp.setText(dateString);

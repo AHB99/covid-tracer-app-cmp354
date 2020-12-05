@@ -123,7 +123,7 @@ public class DatabaseConnector
          String createQuery = "CREATE TABLE exposures" +
             "(_id integer primary key autoincrement," +
             "posId TEXT, userId TEXT, lat DOUBLE," +
-            "lng DOUBLE, timestamp int);";
+            "lng DOUBLE, timestamp long);";
 
          db.execSQL(createQuery); // execute the query
       } // end method onCreate
