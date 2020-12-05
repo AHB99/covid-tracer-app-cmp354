@@ -33,7 +33,9 @@ public class HomeActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
 
-        tvWelcome.setText("Welcome " + sharedPreferences.getString("userName", ""));
+        String userName = sharedPreferences.getString("userName", "");
+        userName = userName.substring(0, 1).toUpperCase() + userName.substring(1, userName.length());
+        tvWelcome.setText("Welcome " + userName);
         tglBtnPcr.setChecked(sharedPreferences.getBoolean("userPositive",false));
 
         startService(new Intent(this, CheckExposureService.class));

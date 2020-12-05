@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/healthcare"
     android:gravity="center"
     tools:context=".MainActivity">
 
@@ -21,6 +22,7 @@
             android:foregroundGravity="center"
             android:gravity="center"
             android:text="Set Account Info"
+            android:textColor="#F88484"
             android:textSize="36sp"
             android:textStyle="bold" />
     </TableRow>
@@ -43,6 +45,7 @@
                 android:layout_weight="1"
                 android:paddingRight="18dp"
                 android:text="Name"
+                android:textColor="#F88484"
                 android:textSize="14sp" />
 
             <EditText
@@ -72,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Email ID"
+                android:textColor="#F88484"
                 android:textSize="14sp" />
 
             <EditText
@@ -94,8 +98,10 @@
             android:id="@+id/btnSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#F88484"
             android:onClick="onSubmitClicked"
             android:text="Submit"
+            android:textColor="#FFFFFF"
             android:textSize="14sp" />
     </TableRow>
 </TableLayout>

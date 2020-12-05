@@ -19,7 +19,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ViewExposuresActivity  extends ListActivity
+public class ViewExposuresActivity extends ListActivity
 {
     public static final String ROW_ID = "row_id"; // Intent extra key
     private ListView exposureListView; // the ListActivity's ListView

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/healthcare2"
     tools:context=".HomeActivity">
 
     <TableRow
@@ -19,6 +20,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center_horizontal"
             android:text="TextView"
+            android:textColor="#F88484"
             android:textSize="36sp"
             android:textStyle="bold" />
     </TableRow>
@@ -33,9 +35,12 @@
             android:id="@+id/tglBtnPcr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#F88484"
             android:gravity="center_horizontal"
             android:onClick="onPcrToggled"
             android:text="ToggleButton"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#3CC5BA"
             android:textOff="Negative PCR"
             android:textOn="Positive PCR"
             android:textSize="14sp" />
@@ -51,9 +56,11 @@
             android:id="@+id/btnViewExposures"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#F88484"
             android:gravity="center_horizontal"
             android:onClick="onViewExposureButtonClicked"
             android:text="View Exposures"
+            android:textColor="#FFFFFF"
             android:textSize="14sp" />
     </TableRow>
 </TableLayout>

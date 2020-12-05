@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" android:layout_weight="1">
-    <TableLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="@drawable/detailedview">
+
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="1" android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:stretchColumns="1">
 
         <TableRow
             android:id="@+id/nameTableRow"
@@ -67,8 +72,10 @@
                 android:id="@+id/mapButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#F88484"
                 android:onClick="onMapButtonClicked"
-                android:text="View In Map" />
+                android:text="View In Map"
+                android:textColor="#FFFFFF" />
         </TableRow>
 
     </TableLayout>
