@@ -40,9 +40,12 @@ public class UserLocation {
     }
 
     public static boolean isExposure(UserLocation posLoc, UserLocation currLoc){
+        long sysTime = System.currentTimeMillis();
         return ((Math.abs(posLoc.getLat() - currLoc.getLat()) < 2)
                 && (Math.abs(posLoc.getLng() - currLoc.getLng()) < 2)
-                && (Math.abs(posLoc.getTs() - currLoc.getTs()) < 1000*60*60*24));
+                && (Math.abs(posLoc.getTs() - currLoc.getTs()) < 1000*60*60*24)
+                && (Math.abs(posLoc.getTs() - sysTime) < 1000*60*60*24*14)
+                && (Math.abs(currLoc.getTs() - sysTime) < 1000*60*60*24*14));
 
     }
 
