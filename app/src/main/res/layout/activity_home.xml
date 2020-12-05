@@ -9,7 +9,8 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/tvWelcome"
@@ -18,13 +19,15 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center_horizontal"
             android:text="TextView"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:textStyle="bold" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp">
 
         <ToggleButton
             android:id="@+id/tglBtnPcr"
@@ -34,13 +37,15 @@
             android:onClick="onPcrToggled"
             android:text="ToggleButton"
             android:textOff="Negative PCR"
-            android:textOn="Positive PCR" />
+            android:textOn="Positive PCR"
+            android:textSize="14sp" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp">
 
         <Button
             android:id="@+id/btnViewExposures"
@@ -48,6 +53,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:onClick="onViewExposureButtonClicked"
-            android:text="View Exposures" />
+            android:text="View Exposures"
+            android:textSize="14sp" />
     </TableRow>
 </TableLayout>

@@ -40,8 +40,7 @@ public class GPSService extends Service implements GoogleApiClient.ConnectionCal
                 .build();
         locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(5000)
-                .setFastestInterval(2000);
+                .setInterval(5000);
         googleApiClient.connect();
     }
 
