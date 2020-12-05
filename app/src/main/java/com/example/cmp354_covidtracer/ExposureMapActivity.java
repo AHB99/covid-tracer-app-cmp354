@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -48,6 +51,16 @@ public class ExposureMapActivity extends FragmentActivity implements OnMapReadyC
         LatLng l = new LatLng(lat, lng);
 
         mMap.addMarker(new MarkerOptions().position(l).title("Lat: "+lat+"\nLong: "+lng));
+
+
+        mMap.animateCamera(
+                CameraUpdateFactory.newCameraPosition(
+                        new CameraPosition.Builder()
+                                .target(l)
+                                .zoom(16.5f)
+                                .bearing(0)
+                                .tilt(25)
+                                .build()));
 
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
             @Override
